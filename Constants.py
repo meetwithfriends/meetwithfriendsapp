@@ -1,4 +1,4 @@
 db = dbname,
-username = 'ihor',
-password = 'ihorsql',
+username = 'username',
+password = 'password',
 host = 127.0.0.1
