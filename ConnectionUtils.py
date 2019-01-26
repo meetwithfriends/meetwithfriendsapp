@@ -1,14 +1,16 @@
-import pymysql.cursors
 import Constants
+import mysql.connector
 
 
-# Функция возвращает connection.
-def getConnection():
-    # Вы можете изменить параметры соединения.
-    connection = pymysql.connect(host= Constants.host,
-                                 user= Constants.username,
-                                 password=Constants.password,
-                                 db=Constants.db,
-                                 charset='utf8mb4',
-                                 cursorclass=pymysql.cursors.DictCursor)
-    return connection
+def connection():
+    try:
+        c = mysql.connector.connect(
+            host=Constants.host,
+            user=Constants.username,
+            passwd=Constants.password,
+            database=Constants.database
+        )
+        return c
+    except:
+        print("Could not connect to database!")
+        exit(1)

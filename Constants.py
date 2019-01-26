@@ -1,4 +1,5 @@
-db = dbname,
-username = 'username',
-password = 'password',
-host = 127.0.0.1
+username = "username"
+password = "password"
+host = "127.0.0.1"
+database = "meetwithfriends"
+secret_key = "very_big_secret"
