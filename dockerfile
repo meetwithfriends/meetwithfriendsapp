@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD [ "python", "./__init__.py" ]
+CMD [ "python", "./auth.py" ]
