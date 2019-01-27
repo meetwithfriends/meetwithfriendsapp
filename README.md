@@ -42,7 +42,7 @@ Response: 200 OK
 ```
 ### Get current user's groups
 #### **GET** groups metod call example:
-> POST [YOUR_SERVER_ADDRESS/groups]
+> GET [YOUR_SERVER_ADDRESS/groups]
 
 > Should contain "token" in header 
 ```JSON
@@ -81,7 +81,7 @@ Response: 200 OK
     "creatorId": "e1469ce8-8d85-471f-b4ca-6925b418f34b",
     "note": "For awesome friends",
     "number_of_users": 1,
-    "avatar": "https://{YOUR_SERVER_ADDRESS}/img/dummy.png" //Filled with dummy image if no avatar selected
+    "avatar": "https://{YOUR_SERVER_ADDRESS}/img/dummy.png"
 }
 ```
 
