@@ -13,9 +13,9 @@ CREATE TABLE `meetwithfriends`.`Users` (
   UNIQUE INDEX `Email_UNIQUE` (`Email` ASC));
 
 CREATE TABLE `meetwithfriends`.`Sessions` (
-  `Id` INT NOT NULL,
+  `Id` VARCHAR(50) NOT NULL,
   `UserId` VARCHAR(50) NOT NULL,
-  `Token` VARCHAR(50) NOT NULL,
+  `Token` VARCHAR(255) NOT NULL,
   `StartDate` DATETIME NOT NULL,
   `DueDate` DATETIME NOT NULL,
   PRIMARY KEY (`Id`),
@@ -29,6 +29,7 @@ CREATE TABLE `meetwithfriends`.`Sessions` (
 CREATE TABLE `meetwithfriends`.`Groups` (
   `Id` VARCHAR(50) NOT NULL,
   `CreatorId` VARCHAR(50) NULL,
+  `Name` VARCHAR(50) NULL,
   `Note` VARCHAR(255) NULL,
   `Avatar` BLOB NULL,
   PRIMARY KEY (`Id`),
