@@ -44,7 +44,9 @@ Response: 200 OK
 #### **GET** groups metod call example:
 > GET [YOUR_SERVER_ADDRESS/groups]
 
-> Should contain "token" in header 
+> Should contain "token" in header
+
+>todo: add number of user in response, add avatar storage 
 ```JSON
 Request:
 {
@@ -56,7 +58,6 @@ Response: 200 OK
     "name": "Awesome group",
     "creator_id": "e1469ce8-8d85-471f-b4ca-6925b418f34b",
     "note": "For awesome friends",
-    "number_of_users": 2,
     "avatar": "https://{YOUR_SERVER_ADDRESS}/img/dummy.png"
 }
 ]
@@ -64,7 +65,7 @@ Response: 200 OK
 
 ### Create friends group
 #### **POST** Create group metod call example:
-> POST [YOUR_SERVER_ADDRESS/create_group]
+> POST [YOUR_SERVER_ADDRESS/group]
 
 > Should contain "token" in header 
 ```JSON
@@ -76,11 +77,10 @@ Request:
 }
 Response: 200 OK
 {
-    "groupId": "05043a00-018a-46a8-be79-74b3c992c790",
+    "group_id": "05043a00-018a-46a8-be79-74b3c992c790",
     "name": "Awesome group",
-    "creatorId": "e1469ce8-8d85-471f-b4ca-6925b418f34b",
+    "creator_id": "e1469ce8-8d85-471f-b4ca-6925b418f34b",
     "note": "For awesome friends",
-    "number_of_users": 1,
     "avatar": "https://{YOUR_SERVER_ADDRESS}/img/dummy.png"
 }
 ```
@@ -89,7 +89,7 @@ Response: 200 OK
 
 ## Requires:
 
-```buildoutcfg
+```
 pip install Flask
 pip install PyJWT
 pip install mysql
