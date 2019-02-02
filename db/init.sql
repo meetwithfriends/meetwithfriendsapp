@@ -79,7 +79,14 @@ CREATE TABLE `meetwithfriends`.`places` (
   `name` VARCHAR(50) NOT NULL,
   `address` VARCHAR(50) NULL,
   `site` VARCHAR(50) NULL,
-  PRIMARY KEY (`id`));
+  `group_id` VARCHAR(50) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_PlacesGroupid_idx` (`group_id` ASC),
+  CONSTRAINT `fk_places_group_id`
+    FOREIGN KEY (`group_id`)
+    REFERENCES `meetwithfriends`.`groups` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
 CREATE TABLE `meetwithfriends`.`meals_in_meetings` (
   `id` VARCHAR(50) NOT NULL,
