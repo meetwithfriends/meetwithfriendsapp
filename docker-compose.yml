@@ -3,7 +3,7 @@ version: '3.4'
 services:
   backend:
     container_name: app
-    build: .
+    build: ./be
     volumes:
       - .:/usr/src/app
     ports:
@@ -11,7 +11,7 @@ services:
     links:
       - db
   db:
-    image: mysql
+    build: ./db
     container_name: db
     command: --default-authentication-plugin=mysql_native_password
     restart: always

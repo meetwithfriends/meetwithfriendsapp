@@ -1,0 +1,7 @@
+FROM mysql
+
+LABEL maintainer="meetwithfriendsapp@gmail.com"
+
+COPY . .
+
+CMD mysql -u $MYSQL_USER -p $MYSQL_PASSWORD $MYSQL_DATABASE < init.sql
