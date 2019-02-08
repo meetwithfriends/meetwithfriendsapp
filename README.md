@@ -180,6 +180,7 @@ Request:
     "group_id": "05043a00-018a-46a8-be79-74b3c992c790",
     "name": "Dominos Pizza",
     "address": "ukraine, Kyiv, 25 some str, ",
+    "note": "Always bring some sweets",
     "site": "www.dominos.com"
 }
 Response: 200 OK
@@ -188,6 +189,7 @@ Response: 200 OK
     "name": "Dominos Pizza",
     "id": "e1469ce8-8d85-471f-b4ca-6925b418f34b",
     "address": "ukraine, Kyiv, 25 some str",
+    "note": "Always bring some sweets",
     "site": "www.dominos.com"
 }
 ```
@@ -209,14 +211,14 @@ Response: 200 OK
     "id": "1cca84d6-3833-4854-bb80-3d06a342180e",
     "group_id": "05043a00-018a-46a8-be79-74b3c992c790",
     "name": "Pizza with peperonni",
-    "meal_provider_id": "e1469ce8-8d85-471f-b4ca-6925b418f34b",
+    "meal_provider_id": "b987d0ff-5edf-46dd-8c1a-e4511916d464",
     "img": ""
 },
 {   
     "id": "2767f978-7e48-4e41-b9da-982106d29c55",
     "group_id": "05043a00-018a-46a8-be79-74b3c992c790",
     "name": "Pizza with cheese",
-    "meal_provider_id": "e1469ce8-8d85-471f-b4ca-6925b418f34b",
+    "meal_provider_id": "b987d0ff-5edf-46dd-8c1a-e4511916d464",
     "img": ""
 }
 ]
@@ -247,11 +249,17 @@ Response: 200 OK
 ```
 
 
-TODO:
-Add invite to group endpoint
-get invites
-accept invite
+## TODO:
+- Add invite to group endpoint
+- get invites
+- accept invite
 
+> make different readmes for each module (FE/BE/DB)
+
+## Long list
+
+- send invite email
+- restore password
 
 ## Requires:
 

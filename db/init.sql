@@ -40,40 +40,26 @@ CREATE TABLE `meetwithfriends`.`groups` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE TABLE `meetwithfriends`.`meetings` (
-  `id` varchar(50) NOT NULL,
-  `meeting_date` datetime DEFAULT NULL,
-  `creator_id` varchar(50) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `group_id` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_Creatorid_idx` (`creator_id`),
-  KEY `fk_MeetingGroupid_idx` (`group_id`),
-  CONSTRAINT `fk_Creatorid` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_MeetingGroupid` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-);
-
-CREATE TABLE `meetwithfriends`.`meal_providers` (
+CREATE TABLE `meetwithfriends`.`users_in_groups` (
   `id` VARCHAR(50) NOT NULL,
-  `name` VARCHAR(50) NULL,
-  `note` VARCHAR(50) NULL,
-  `address` VARCHAR(50) NULL,
-  `site` VARCHAR(50) NULL,
-  PRIMARY KEY (`id`));
-
-CREATE TABLE `meetwithfriends`.`meals` (
-  `id` VARCHAR(50)  NOT NULL,
-  `name` VARCHAR(50) NOT NULL,
-  `provider_id` VARCHAR(50) NULL,
-  `image` BLOB NULL,
+  `user_id` VARCHAR(50) NOT NULL,
+  `group_id` VARCHAR(50) NOT NULL,
+  `is_admin` TINYINT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Mealprovider_idx` (`provider_id` ASC),
-  CONSTRAINT `fk_Mealprovider`
-    FOREIGN KEY (`provider_id`)
-    REFERENCES `meetwithfriends`.`meal_providers` (`id`)
+  INDEX `fk_UsersInGroups1_idx` (`user_id` ASC),
+  INDEX `fk_UsersInGroups2_idx` (`group_id` ASC),
+  CONSTRAINT `fk_UsersInGroups1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `meetwithfriends`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_UsersInGroups2`
+    FOREIGN KEY (`group_id`)
+    REFERENCES `meetwithfriends`.`groups` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-    
+
+
 CREATE TABLE `meetwithfriends`.`places` (
   `id` VARCHAR(50) NOT NULL,
   `name` VARCHAR(50) NOT NULL,
@@ -87,6 +73,49 @@ CREATE TABLE `meetwithfriends`.`places` (
     REFERENCES `meetwithfriends`.`groups` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+
+CREATE TABLE `meetwithfriends`.`meal_providers` (
+  `id` VARCHAR(50) NOT NULL,
+  `name` VARCHAR(50) NULL,
+  `note` VARCHAR(50) NULL,
+  `address` VARCHAR(50) NULL,
+  `site` VARCHAR(50) NULL,
+  `group_id` VARCHAR(50) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_ProvidersGroupid_idx` (`group_id` ASC),
+  CONSTRAINT `fk_places_group_id`
+    FOREIGN KEY (`group_id`)
+    REFERENCES `meetwithfriends`.`groups` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION));
+
+CREATE TABLE `meetwithfriends`.`meals` (
+  `id` VARCHAR(50)  NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
+  `provider_id` VARCHAR(50) NULL,
+  `image` BLOB NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_Mealprovider_idx` (`provider_id` ASC),
+  CONSTRAINT `fk_Mealprovider`
+    FOREIGN KEY (`provider_id`)
+    REFERENCES `meetwithfriends`.`meal_providers` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `meetwithfriends`.`meetings` (
+  `id` varchar(50) NOT NULL,
+  `meeting_date` datetime DEFAULT NULL,
+  `creator_id` varchar(50) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `group_id` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_Creatorid_idx` (`creator_id`),
+  KEY `fk_MeetingGroupid_idx` (`group_id`),
+  CONSTRAINT `fk_Creatorid` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_MeetingGroupid` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+    
 
 CREATE TABLE `meetwithfriends`.`meals_in_meetings` (
   `id` VARCHAR(50) NOT NULL,
@@ -123,24 +152,5 @@ CREATE TABLE `meetwithfriends`.`places_in_meetings` (
   CONSTRAINT `fk_PlacesInMeetings2`
     FOREIGN KEY (`meeting_id`)
     REFERENCES `meetwithfriends`.`meetings` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-
-CREATE TABLE `meetwithfriends`.`users_in_groups` (
-  `id` VARCHAR(50) NOT NULL,
-  `user_id` VARCHAR(50) NOT NULL,
-  `group_id` VARCHAR(50) NOT NULL,
-  `is_admin` TINYINT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_UsersInGroups1_idx` (`user_id` ASC),
-  INDEX `fk_UsersInGroups2_idx` (`group_id` ASC),
-  CONSTRAINT `fk_UsersInGroups1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `meetwithfriends`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_UsersInGroups2`
-    FOREIGN KEY (`group_id`)
-    REFERENCES `meetwithfriends`.`groups` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);

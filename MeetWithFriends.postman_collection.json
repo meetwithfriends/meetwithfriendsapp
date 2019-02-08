@@ -114,7 +114,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAdGVzdC50ZXN0IiwiZXhwaWVzX2F0IjoiMjAxOS0wMS0zMSAwOTozNToxNi40MjI3NzEifQ.80cCQkdZit8dLxZRnUeYNcC8rJ1PXDD8-rA-AkYxPjk",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAdGVzdC50ZXN0IiwiZXhwaWVzX2F0IjoiMjAxOS0wMi0xMCAxOToyNTozOS4xNjM2NTMifQ.NYha4JEwg3IV9NWCM5-SxhSrggKZy1QEVi2ArnHpGmM",
 						"type": "text"
 					},
 					{
@@ -148,10 +148,22 @@
 			"name": "Add Place",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAdGVzdC50ZXN0IiwiZXhwaWVzX2F0IjoiMjAxOS0wMi0xMCAxOToyNTozOS4xNjM2NTMifQ.NYha4JEwg3IV9NWCM5-SxhSrggKZy1QEVi2ArnHpGmM",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n    \"group_id\": \"c070ae50-4b60-4514-99c2-91f0c8c4e5f0\",\n    \"name\": \"Dominos Pizza\",\n    \"address\": \"ukraine, Kyiv, 25 some str, \",\n    \"site\": \"www.dominos.com\"\n}\n\n\n\n\n\n\n\n\n"
 				},
 				"url": {
 					"raw": "127.0.0.1:5000/place",
@@ -202,6 +214,164 @@
 							"key": "",
 							"value": ""
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add provider",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAdGVzdC50ZXN0IiwiZXhwaWVzX2F0IjoiMjAxOS0wMi0xMCAxOToyNTozOS4xNjM2NTMifQ.NYha4JEwg3IV9NWCM5-SxhSrggKZy1QEVi2ArnHpGmM",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"group_id\": \"c070ae50-4b60-4514-99c2-91f0c8c4e5f0\",\n    \"name\": \"Dominos Pizza\",\n    \"address\": \"ukraine, Kyiv, 25 some str, \",\n    \"note\": \"Always bring some sweets\",\n    \"site\": \"www.dominos.com\"\n}"
+				},
+				"url": {
+					"raw": "127.0.0.1:5000/meal_provider",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"meal_provider"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get providers",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAdGVzdC50ZXN0IiwiZXhwaWVzX2F0IjoiMjAxOS0wMi0xMCAxOToyNTozOS4xNjM2NTMifQ.NYha4JEwg3IV9NWCM5-SxhSrggKZy1QEVi2ArnHpGmM"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "127.0.0.1:5000/meal_providers/c070ae50-4b60-4514-99c2-91f0c8c4e5f0",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"meal_providers",
+						"c070ae50-4b60-4514-99c2-91f0c8c4e5f0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add meal",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAdGVzdC50ZXN0IiwiZXhwaWVzX2F0IjoiMjAxOS0wMi0xMCAxOToyNTozOS4xNjM2NTMifQ.NYha4JEwg3IV9NWCM5-SxhSrggKZy1QEVi2ArnHpGmM"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Pizza with cheese\",\n    \"provider_id\": \"b987d0ff-5edf-46dd-8c1a-e4511916d464\",\n    \"image\": \"\"\n}"
+				},
+				"url": {
+					"raw": "127.0.0.1:5000/meal",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"meal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get meals",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAdGVzdC50ZXN0IiwiZXhwaWVzX2F0IjoiMjAxOS0wMi0xMCAxOToyNTozOS4xNjM2NTMifQ.NYha4JEwg3IV9NWCM5-SxhSrggKZy1QEVi2ArnHpGmM"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "127.0.0.1:5000/meals/c070ae50-4b60-4514-99c2-91f0c8c4e5f0",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"meals",
+						"c070ae50-4b60-4514-99c2-91f0c8c4e5f0"
 					]
 				}
 			},

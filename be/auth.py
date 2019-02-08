@@ -114,7 +114,7 @@ def create_user_group():
     try:
         connection.commit()
         return make_response(jsonify(
-            {'group_id': group_id, 'name': req['name'], 'note': req['note'], 'avatar': req['avatar'],
+            {'id': group_id, 'name': req['name'], 'note': req['note'], 'avatar': req['avatar'],
              'creator_id': user_id}), 200)
     except:
         return make_response(jsonify({'message': 'Internal server error'}), 500)
@@ -125,6 +125,7 @@ def create_new_place():
     user_id = get_user_by_token(request.headers.get('token'))
     if not user_id:
         return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
+    #todo: add check on group rights
     req = request.get_json()
     cur = connection.cursor()
     
@@ -134,7 +135,7 @@ def create_new_place():
     try:
         connection.commit()
         return make_response(jsonify(
-            {'place_id': place_id, 'name': req['name'], 'address': req['address'], 'site': req['site'],
+            {'id': place_id, 'name': req['name'], 'address': req['address'], 'site': req['site'],
              'group_id': req['group_id']}), 200)
     except:
         return make_response(jsonify({'message': 'Internal server error'}), 500)
@@ -145,7 +146,7 @@ def get_group_places(group_id):
     user_id = get_user_by_token(request.headers.get('token'))
     if not user_id:
         return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
-
+    #todo: add check on group rights
     cur = connection.cursor()
     cur.execute("SELECT * FROM places where group_id=%s", (group_id,))
     row_headers = [x[0] for x in cur.description]
@@ -154,6 +155,82 @@ def get_group_places(group_id):
     for result in places:
         json_data.append(dict(zip(row_headers, result)))
     return jsonify(json_data)
+
+
+@app.route('/meal_provider', methods=['post'])
+def create_new_meal_provider():
+    user_id = get_user_by_token(request.headers.get('token'))
+    if not user_id:
+        return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
+    #todo: add check on group rights
+    req = request.get_json()
+    cur = connection.cursor()
+    
+    provider_id = str(uuid.uuid4())
+    cur.execute("Insert into meal_providers (id, name, address, site, group_id, note) values (%s, %s, %s, %s, %s, %s)",
+                (provider_id, req['name'], req['address'], req['site'], req['group_id'], req['note']))
+    try:
+        connection.commit()
+        return make_response(jsonify(
+            {'id': provider_id, 'name': req['name'], 'address': req['address'], 'site': req['site'],
+             'group_id': req['group_id'], 'note': req['note']}), 200)
+    except:
+        return make_response(jsonify({'message': 'Internal server error'}), 500)
+
+
+@app.route('/meal_providers/<group_id>', methods=['GET'])
+def get_group_meal_providers(group_id):
+    user_id = get_user_by_token(request.headers.get('token'))
+    if not user_id:
+        return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
+    #todo: add check on group rights
+    cur = connection.cursor()
+    cur.execute("SELECT * FROM meal_providers where group_id=%s", (group_id,))
+    row_headers = [x[0] for x in cur.description]
+    places = cur.fetchall()
+    json_data = []
+    for result in places:
+        json_data.append(dict(zip(row_headers, result)))
+    return jsonify(json_data)
+
+
+@app.route('/meal', methods=['post'])
+def create_new_meal():
+    user_id = get_user_by_token(request.headers.get('token'))
+    if not user_id:
+        return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
+    #todo: add check on group rights
+    req = request.get_json()
+    cur = connection.cursor()
+    
+    meal_id = str(uuid.uuid4())
+    cur.execute("Insert into meals (id, name, provider_id, image) values (%s, %s, %s, %s)",
+                (meal_id, req['name'], req['provider_id'], req['image']))
+
+    #todo: add error handling for nullable fields
+    try:
+        connection.commit()
+        return make_response(jsonify(
+            {'id': meal_id, 'name': req['name'], 'provider_id': req['provider_id'], 'image': req['image']}), 200)
+    except:
+        return make_response(jsonify({'message': 'Internal server error'}), 500)
+
+
+@app.route('/meals/<group_id>', methods=['GET'])
+def get_group_meals(group_id):
+    user_id = get_user_by_token(request.headers.get('token'))
+    if not user_id:
+        return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
+    #todo: add check on group rights
+    cur = connection.cursor()
+    cur.execute("SELECT m.* FROM meals m, meal_providers p where m.provider_id = p.id and p.group_id=%s", (group_id,))
+    row_headers = [x[0] for x in cur.description]
+    places = cur.fetchall()
+    json_data = []
+    for result in places:
+        json_data.append(dict(zip(row_headers, result)))
+    return jsonify(json_data)
+
 
 
 if __name__ == '__main__':
