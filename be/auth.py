@@ -53,7 +53,7 @@ def sign_in():
 
     return make_response(jsonify({'email': auth['email'], 'token': token.decode('UTF-8')}), 200)
 
-
+# TODO: add error handling
 @app.route('/signup', methods=['POST'])
 def sign_up():
     req = request.get_json()
@@ -105,6 +105,8 @@ def create_user_group():
     req = request.get_json()
     cur = connection.cursor()
     group_id = str(uuid.uuid4())
+    print(group_id)
+    print(req)
     cur.execute("Insert into groups (id, name, note, avatar, creator_id) values (%s, %s, %s, %s, %s)",
                 (group_id, req['name'], req['note'], req['avatar'], user_id))
     cur.execute("Insert into users_in_groups (id, user_id, group_id, is_admin) values (%s, %s, %s, %s)",
@@ -116,6 +118,42 @@ def create_user_group():
              'creator_id': user_id}), 200)
     except:
         return make_response(jsonify({'message': 'Internal server error'}), 500)
+
+
+@app.route('/place', methods=['post'])
+def create_new_place():
+    user_id = get_user_by_token(request.headers.get('token'))
+    if not user_id:
+        return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
+    req = request.get_json()
+    cur = connection.cursor()
+    
+    place_id = str(uuid.uuid4())
+    cur.execute("Insert into places (id, name, address, site, group_id) values (%s, %s, %s, %s, %s)",
+                (place_id, req['name'], req['address'], req['site'], req['group_id']))
+    try:
+        connection.commit()
+        return make_response(jsonify(
+            {'place_id': place_id, 'name': req['name'], 'address': req['address'], 'site': req['site'],
+             'group_id': req['group_id']}), 200)
+    except:
+        return make_response(jsonify({'message': 'Internal server error'}), 500)
+
+
+@app.route('/places/<group_id>', methods=['GET'])
+def get_group_places(group_id):
+    user_id = get_user_by_token(request.headers.get('token'))
+    if not user_id:
+        return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
+
+    cur = connection.cursor()
+    cur.execute("SELECT * FROM places where group_id=%s", (group_id,))
+    row_headers = [x[0] for x in cur.description]
+    places = cur.fetchall()
+    json_data = []
+    for result in places:
+        json_data.append(dict(zip(row_headers, result)))
+    return jsonify(json_data)
 
 
 if __name__ == '__main__':
