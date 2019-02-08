@@ -246,6 +246,13 @@ Response: 200 OK
 }
 ```
 
+
+TODO:
+Add invite to group endpoint
+get invites
+accept invite
+
+
 ## Requires:
 
 ```
