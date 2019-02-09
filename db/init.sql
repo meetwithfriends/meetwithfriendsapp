@@ -59,6 +59,35 @@ CREATE TABLE `meetwithfriends`.`users_in_groups` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+CREATE TABLE `meetwithfriends`.`invitations` (
+  `id` VARCHAR(50) NOT NULL,
+  `invitee_id` VARCHAR(50) NULL,
+  `group_name` VARCHAR(50) NULL,
+  `group_id` VARCHAR(50) NULL,
+  `invitator_id` VARCHAR(50) NULL,
+  `invitator_name` VARCHAR(100) NULL,
+  `message` VARCHAR(255) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_invitations_3_idx` (`group_id` ASC),
+  INDEX `fk_invitations_1_idx` (`invitee_id` ASC),
+  INDEX `fk_invitations_2_idx` (`invitator_id` ASC),
+  CONSTRAINT `fk_invitations_3`
+    FOREIGN KEY (`group_id`)
+    REFERENCES `meetwithfriends`.`groups` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_invitations_1`
+    FOREIGN KEY (`invitee_id`)
+    REFERENCES `meetwithfriends`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_invitations_2`
+    FOREIGN KEY (`invitator_id`)
+    REFERENCES `meetwithfriends`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
 
 CREATE TABLE `meetwithfriends`.`places` (
   `id` VARCHAR(50) NOT NULL,

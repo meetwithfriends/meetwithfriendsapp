@@ -248,11 +248,69 @@ Response: 200 OK
 }
 ```
 
+### Invite user to group
+#### **POST** invite metod call example:
+> POST [YOUR_SERVER_ADDRESS/invite]
+
+> Should contain "token" in header
+
+```JSON
+Request:
+{
+    "group_id": "05043a00-018a-46a8-be79-74b3c992c790",
+    "email": "friend@gmail.com",
+    "message": "Join our group to hang out together!"
+}
+Response: 200 OK
+{   
+    "id": "1cca84d6-3833-4854-bb80-3d06a342180e",
+    "invitee_email": "friend@gmail.com",
+    "group_name": "Awesome friends",
+    "group_id": "05043a00-018a-46a8-be79-74b3c992c790",
+    "message": "Join our group to hang out together!"
+}
+```
+
+
+### Get user's invitations
+#### **GET** invite metod call example:
+> GET [YOUR_SERVER_ADDRESS/invitations]
+
+> Should contain "token" in header
+
+```JSON
+Request:
+{
+}
+Response: 200 OK
+[
+{   
+    "id": "1cca84d6-3833-4854-bb80-3d06a342180e",
+    "invitee_id": "c7413dde-5c9c-493b-9afe-8c1edb153626",
+    "group_name": "Awesome friends",
+    "group_id": "05043a00-018a-46a8-be79-74b3c992c790",
+    "invitator_name": "John Smith",
+    "invitator_id": "05043a00-018a-46a8-be79-74b3c992c790",
+    "message": "Join our group to hang out together!"
+},
+{   
+    "id": "6767f978-7e48-4e41-b9da-982106d29c55",
+    "invitee_id": "d8322cc4-479c-48c5-af1d-21748da01460",
+    "group_name": "Even more awesome friends",
+    "group_id": "05043a00-018a-46a8-be79-74b3c992c790",
+    "invitator_name": "Jane Doe",
+    "invitator_id": "05043a00-018a-46a8-be79-74b3c992c790",
+    "message": "Join our group to hang out together!"
+},
+]
+```
+
+
+
+
 
 ## TODO:
-- Add invite to group endpoint
-- get invites
-- accept invite
+> logout
 
 > make different readmes for each module (FE/BE/DB)
 
