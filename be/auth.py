@@ -12,6 +12,47 @@ app.config['SECRET'] = Constants.secret_key
 connection = ConnectionUtils.connection()
 
 
+def get_user_by_token(token):
+    cur = connection.cursor()
+    cur.execute("select user_id from sessions where token=%s and due_date < %s < start_date",
+                (token, datetime.datetime.utcnow()))
+    try:
+        user_id = cur.fetchone()
+        return user_id[0]
+    except:
+        return ''
+
+
+def get_user_by_email(email):
+    cur = connection.cursor()
+    cur.execute("select id from users where email=%s", (email, ))
+    try:
+        user_id = cur.fetchone()
+        return user_id[0]
+    except:
+        return ''
+
+
+def get_user_name_by_id(id):
+    cur = connection.cursor()
+    cur.execute("select first_name + ' ' + last_name from users where id=%s", (id, ))
+    try:
+        user_id = cur.fetchone()
+        return user_id[0]
+    except:
+        return ''
+
+
+def get_group_name_by_id(id):
+    cur = connection.cursor()
+    cur.execute("select name from groups where id=%s", (id, ))
+    try:
+        group_name = cur.fetchone()
+        return group_name[0]
+    except:
+        return ''
+
+
 @app.route('/')
 def get_api_calls_list():
     with open('README.md', 'r') as md_file:
@@ -70,17 +111,6 @@ def sign_up():
     return make_response(jsonify({'message': 'User created successfully'}), 200)
 
 
-def get_user_by_token(token):
-    cur = connection.cursor()
-    cur.execute("select user_id from sessions where token=%s and due_date < %s < start_date",
-                (token, datetime.datetime.utcnow()))
-    try:
-        user_id = cur.fetchone()
-        return user_id[0]
-    except:
-        return ''
-
-
 @app.route('/groups', methods=['GET'])
 def get_user_groups():
     user_id = get_user_by_token(request.headers.get('token'))
@@ -105,8 +135,6 @@ def create_user_group():
     req = request.get_json()
     cur = connection.cursor()
     group_id = str(uuid.uuid4())
-    print(group_id)
-    print(req)
     cur.execute("Insert into groups (id, name, note, avatar, creator_id) values (%s, %s, %s, %s, %s)",
                 (group_id, req['name'], req['note'], req['avatar'], user_id))
     cur.execute("Insert into users_in_groups (id, user_id, group_id, is_admin) values (%s, %s, %s, %s)",
@@ -230,6 +258,67 @@ def get_group_meals(group_id):
     for result in places:
         json_data.append(dict(zip(row_headers, result)))
     return jsonify(json_data)
+
+
+@app.route('/invitations', methods=['GET'])
+def get_user_invitations():
+    user_id = get_user_by_token(request.headers.get('token'))
+    if not user_id:
+        return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
+
+    cur = connection.cursor()
+    cur.execute("SELECT * FROM invitations WHERE invitee_id = %s", (user_id,))
+    row_headers = [x[0] for x in cur.description]
+    invitations = cur.fetchall()
+    json_data = []
+    for result in invitations:
+        json_data.append(dict(zip(row_headers, result)))
+    return jsonify(json_data)
+
+
+@app.route('/invitation', methods=['POST'])
+def invite_user_to_group():
+    user_id = get_user_by_token(request.headers.get('token'))
+    if not user_id:
+        return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
+    req = request.get_json()
+    cur = connection.cursor()
+    invitation_id = str(uuid.uuid4())
+    invitee_id = get_user_by_email(req['email'])
+    user_name = get_user_name_by_id(user_id)
+    group_name = get_group_name_by_id(req['group_id'])
+    cur.execute("Insert into invitations (id, invitee_id, group_name, group_id, invitator_id, invitator_name, message) values (%s, %s, %s, %s, %s, %s, %s)",
+        (invitation_id, invitee_id, group_name, req['group_id'], user_id, user_name, req['message']))
+    try:
+        connection.commit()
+        return make_response(jsonify(
+            {'id': invitation_id, 'invitee_email': req['email'], 'group_name': group_name, 'group_id': req['group_id'], 'message': req['message']}), 200)
+    except:
+        return make_response(jsonify({'message': 'Internal server error'}), 500)
+
+
+@app.route('/accept_invitation', methods=['POST'])
+def accept_group_invitation():
+    user_id = get_user_by_token(request.headers.get('token'))
+    if not user_id:
+        return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
+    req = request.get_json()
+    cur = connection.cursor()
+
+    cur.execute("select 1 from invitations where id=%s and invitee_id=%s and group_id=%s", (req['invitation_id'], user_id, req['group_id']))
+    if not cur.fetchone():
+        return make_response(jsonify({'message': 'You are not invited to this group'}), 403)
+
+    cur.execute("Insert into users_in_groups (id, user_id, group_id, is_admin) values (%s, %s, %s, %s)",
+                (str(uuid.uuid4()), user_id, req['group_id'], True))
+    cur.execute("delete from invitations where id=%s", (req['invitation_id'], ))
+    try:
+        connection.commit()    
+        return make_response(jsonify({'message': 'Successfully joined the group'}), 200)
+    except:
+        return make_response(jsonify({'message': 'Internal server error'}), 500)
+
+
 
 
 
