@@ -60,6 +60,13 @@ def get_api_calls_list():
         return markdown.markdown(readme)
 
 
+@app.after_request
+def allow_cross_domain(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'content-type'
+    return response
+
+
 @app.route('/signin', methods=['POST'])
 def sign_in():
     auth = request.get_json()
