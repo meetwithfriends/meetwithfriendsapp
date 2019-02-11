@@ -6,7 +6,7 @@
     .main-container {
         height: 100vh;
         font-family: Roboto,sans-serif;
-        background: linear-gradient(rgba(109, 141, 223, 0.85), rgba(109, 141, 223, 0.85)), url("../img/image.png") no-repeat;
+        background: linear-gradient(rgba(109, 141, 223, 0.85), rgba(109, 141, 223, 0.85)), url("../img/image.jpg") no-repeat;
         background-size: cover;
         display: flex;
         justify-content: center;
@@ -130,7 +130,7 @@
 @media  screen and (max-width: 600px) {
         .main-container {
             /*width: 100vh;*/
-            background: linear-gradient(rgba(109, 141, 223, 0.85), rgba(109, 141, 223, 0.85)), url("../img/alcohol-alcoholic-beverages-bar-1269044.png") no-repeat;
+            background: linear-gradient(rgba(109, 141, 223, 0.85), rgba(109, 141, 223, 0.85)), url("../img/mob-image.jpg") no-repeat;
             background-size: cover;
             display: flex;
             justify-content: center;
