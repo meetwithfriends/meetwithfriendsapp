@@ -13,7 +13,7 @@ FE/e2e
 
 # profiling files
 /FE/chrome-profiler-events.json
-speed-measure-plugin.json
+/FE/speed-measure-plugin.json
 
 # IDEs and editors
 /.idea
@@ -45,3 +45,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+#PYTHON
+/be/__pycache__
