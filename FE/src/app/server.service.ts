@@ -22,6 +22,21 @@ export class ServerService {
         }
       );
   }
+
+  signIn(request) {
+    const headers = new Headers({'Content-Type': 'application/json'});
+    return this.http.post(this.serverUrl + 'signin', request, {headers: headers})
+      .map(
+        (response: Response) => {
+          console.log(response.json());
+        }
+      )
+      .catch(
+        (error: Response) => {
+          return Observable.throw('Something went wrong');
+        }
+      );
+  }
 /*  getServers() {
     return this.http.get('https://udemy-ng-http.firebaseio.com/data')
       .map(

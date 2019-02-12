@@ -11,9 +11,9 @@ import { ServerService } from './../server.service';
 export class SignInComponent {
 
   constructor(private serverService: ServerService) {}
-  onSignUpClick(email: string, pass: string) {
+  onSignInClick(email: string, pass: string) {
     let x = {"email": email, "pass": pass};
-    this.serverService.signUp(JSON.stringify(x))
+    this.serverService.signIn(JSON.stringify(x))
       .subscribe(
         (response) => console.log(response),
         (error) => console.log(error)
