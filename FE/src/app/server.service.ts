@@ -22,7 +22,7 @@ export class ServerService {
         }
       );
   }
-  getServers() {
+/*  getServers() {
     return this.http.get('https://udemy-ng-http.firebaseio.com/data')
       .map(
         (response: Response) => {
@@ -46,5 +46,5 @@ export class ServerService {
           return response.json();
         }
       );
-  }
+  }*/
 }

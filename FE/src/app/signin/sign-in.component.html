@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <h1>Sign-in</h1>
+      <input type="text" #email><br>
+      <input type="password" #pass><br>
+      <button class="btn btn-primary" (click)="onSignInClick(email.value, pass.value)">sign-in</button>
+      <br><br>
+      <hr>
+      <button class="btn btn-primary" [routerLink]="signup">Register new user</button>
+    </div>
+  </div>
+</div>
