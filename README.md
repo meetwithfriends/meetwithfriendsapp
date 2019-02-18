@@ -16,28 +16,24 @@ If you have something to add - feel free
 [Endpoint list](be/readme.md)
 
 
-
-<TODO's>:
+## <TODO's>:
 ### BE:
-- Add logout
 - Send invitation email to group
 - Restore pass option
 - Create meeting
 - Voting system
-
+- auth module refactoring
 ### DB: 
 - Autoseed
-
 ### FE:
 - Designs:
   - Groups
-  - Meetings
-  - 
+  - Meetings 
 - Skeleton
   - Everything but Sign-in/Sign-Up
 
 
-##General:
+## General:
 - dockerize everything
-- 
+- Readme constant updates
 

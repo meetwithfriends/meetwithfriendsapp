@@ -101,6 +101,20 @@ def sign_in():
 
     return make_response(jsonify({'email': auth['email'], 'token': token.decode('UTF-8')}), 200)
 
+@app.route('/logout', methods=['POST'])
+def logout():
+    user_id = get_user_by_token(request.headers.get('token'))
+
+    if not user_id:
+        return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
+
+    cur = connection.cursor()
+    delete_sql = "delete from sessions where user_id=%s"
+    cur.execute(delete_sql, (user_id, ))
+    connection.commit()
+
+    return make_response(jsonify({'message': 'You have been successfully logged out.'}), 200)
+
 # TODO: add error handling
 @app.route('/signup', methods=['POST'])
 def sign_up():
