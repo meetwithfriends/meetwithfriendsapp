@@ -296,19 +296,12 @@ Response: 200 OK
 ]
 ```
 
-
-
-
-
 ## TODO:
-> logout
-
-> make different readmes for each module (FE/BE/DB)
-
-## Long list
-
 - send invite email
 - restore password
+- Create meeting
+- Voting system
+- divide auth.py into different modules.
 
 ## Requires:
 
