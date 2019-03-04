@@ -1,17 +1,6 @@
 version: '3.4'
 
 services:
-  backend:
-    container_name: app
-    build: ./be
-    volumes:
-      - .:/usr/src/app
-    ports:
-      - 80:5000
-    links:
-      - db
-    depends_on:
-      - db
   db:
     build: ./db
     container_name: db
@@ -20,4 +9,27 @@ services:
     ports:
       - 3305:3306
     environment:
+      MYSQL_USER: username
+      MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
+  app:
+    container_name: app
+    build: ./be
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 5000:5000
+    links:
+      - db
+    depends_on:
+      - db
+  fe:
+    build: ./FE
+    container_name: fe
+    restart: always
+    ports:
+      - 80:4200
+    links:
+      - app
+    depends_on:
+      - app

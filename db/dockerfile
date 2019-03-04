@@ -2,6 +2,8 @@ FROM mysql
 
 LABEL maintainer="meetwithfriendsapp@gmail.com"
 
+WORKDIR /usr/src/db
+
 COPY . .
 
 CMD mysql -u $MYSQL_USER -p $MYSQL_PASSWORD < init.sql

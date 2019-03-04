@@ -1,11 +1,15 @@
-FROM python:3
+FROM ubuntu:18.04
 
 LABEL maintainer="meetwithfriendsapp@gmail.com"
+
+RUN apt update | apt upgrade -y
+RUN apt install python3 -y
+RUN apt install python3-pip -y
 
 WORKDIR /usr/src/app
 
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 COPY . .
 

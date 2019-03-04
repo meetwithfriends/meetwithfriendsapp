@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, make_response, request
 import uuid
 import datetime
+import time
 import ConnectionUtils
 import Constants
 import hashlib
@@ -10,6 +11,13 @@ import jwt
 app = Flask(__name__)
 app.config['SECRET'] = Constants.secret_key
 connection = ConnectionUtils.connection()
+while True:
+    connection = ConnectionUtils.connection()
+    if connection:
+        break
+    print("Waiting 10s for reconnect...")
+    time.sleep(10)
+
 
 
 def get_user_by_token(token):

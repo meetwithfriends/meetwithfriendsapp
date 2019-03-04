@@ -113,11 +113,11 @@ CREATE TABLE `meetwithfriends`.`meal_providers` (
   `group_id` VARCHAR(50) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_ProvidersGroupid_idx` (`group_id` ASC),
-  CONSTRAINT `fk_places_group_id`
+  CONSTRAINT `fk_meals_group_id`
     FOREIGN KEY (`group_id`)
     REFERENCES `meetwithfriends`.`groups` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION));
+    ON UPDATE NO ACTION);
 
 CREATE TABLE `meetwithfriends`.`meals` (
   `id` VARCHAR(50)  NOT NULL,

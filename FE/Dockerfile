@@ -1,5 +1,7 @@
 FROM node:8.10
 
+LABEL maintainer="meetwithfriendsapp@gmail.com"
+
 RUN mkdir /usr/src/webapp
 WORKDIR /usr/src/webapp
 
