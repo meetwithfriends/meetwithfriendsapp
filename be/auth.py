@@ -182,7 +182,6 @@ def create_new_place():
     user_id = get_user_by_token(request.headers.get('token'))
     if not user_id:
         return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
-    #todo: add check on group rights
     req = request.get_json()
     cur = connection.cursor()
     
@@ -203,7 +202,6 @@ def get_group_places(group_id):
     user_id = get_user_by_token(request.headers.get('token'))
     if not user_id:
         return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
-    #todo: add check on group rights
     cur = connection.cursor()
     cur.execute("SELECT * FROM places where group_id=%s", (group_id,))
     row_headers = [x[0] for x in cur.description]
@@ -219,7 +217,7 @@ def create_new_meal_provider():
     user_id = get_user_by_token(request.headers.get('token'))
     if not user_id:
         return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
-    #todo: add check on group rights
+
     req = request.get_json()
     cur = connection.cursor()
     
@@ -240,7 +238,7 @@ def get_group_meal_providers(group_id):
     user_id = get_user_by_token(request.headers.get('token'))
     if not user_id:
         return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
-    #todo: add check on group rights
+
     cur = connection.cursor()
     cur.execute("SELECT * FROM meal_providers where group_id=%s", (group_id,))
     row_headers = [x[0] for x in cur.description]
@@ -256,7 +254,7 @@ def create_new_meal():
     user_id = get_user_by_token(request.headers.get('token'))
     if not user_id:
         return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
-    #todo: add check on group rights
+
     req = request.get_json()
     cur = connection.cursor()
     
@@ -278,7 +276,7 @@ def get_group_meals(group_id):
     user_id = get_user_by_token(request.headers.get('token'))
     if not user_id:
         return make_response(jsonify({'message': 'You should be logged in to perform this action'}), 401)
-    #todo: add check on group rights
+
     cur = connection.cursor()
     cur.execute("SELECT m.* FROM meals m, meal_providers p where m.provider_id = p.id and p.group_id=%s", (group_id,))
     row_headers = [x[0] for x in cur.description]
