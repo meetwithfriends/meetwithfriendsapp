@@ -28,8 +28,6 @@ If you have something to add - feel free
 
 ### DB
 
-- Autoseed
-
 ### FE
 
 - Designs:

@@ -346,10 +346,3 @@ def accept_group_invitation():
         return make_response(jsonify({'message': 'Successfully joined the group'}), 200)
     except:
         return make_response(jsonify({'message': 'Internal server error'}), 500)
-
-
-
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
