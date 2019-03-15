@@ -74,6 +74,11 @@ def allow_cross_domain(response):
     response.headers['Access-Control-Allow-Headers'] = 'content-type'
     return response
 
+@app.handle_exception
+def allow_cross_domain_exception(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'content-type'
+    return response
 
 @app.route('/signin', methods=['POST'])
 def sign_in():

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class ServerService {
 
-  serverUrl = "http://localhost:5000/"
+  serverUrl = "http://diachenko.me:5000/"
   constructor(private http: Http) {}
   signUp(request) {
     const headers = new Headers({'Content-Type': 'application/json'});
