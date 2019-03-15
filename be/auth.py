@@ -98,6 +98,11 @@ def sign_in():
     if stored_hash[0] != str(pass_hash.hexdigest()):
         return make_response(jsonify({'message': 'Username or password incorrect'}), 401)
 
+    token = cur.execute("select token from sessions where user_id=%s and due_date < %s < start_date",
+                (stored_hash[1], datetime.datetime.utcnow()))
+    if token:
+        return make_response(jsonify({'email': auth['email'], 'token': token}), 200)
+
     token_start_date = datetime.datetime.utcnow()
     token_due_date = token_start_date + datetime.timedelta(hours=48)
     token = jwt.encode(
