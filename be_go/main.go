@@ -65,16 +65,6 @@ func GenerateGUID() string {
 	return fmt.Sprintf("%X-%X-%X-%X-%X", b[0:4], b[4:6], b[6:8], b[8:10], b[10:])
 }
 
-func signUp(w http.ResponseWriter, r *http.Request) {
-	var auth UserAuth
-	print(auth.Name)
-	print(auth.Pass)
-}
-
-func signIn(w http.ResponseWriter, r *http.Request) {
-
-}
-
 func serveHelp(w http.ResponseWriter, r *http.Request) {
 	file, _ := ioutil.ReadFile("readme.md")
 	output := markdown.ToHTML(file, nil, nil)
@@ -88,6 +78,8 @@ func main() {
 	router.HandleFunc("/", serveHelp).Methods("GET")
 	router.HandleFunc("/signin", signInEndpoint).Methods("POST")
 	router.HandleFunc("/signin", CORSHandler).Methods("OPTIONS")
+	router.HandleFunc("/signup", signUpEndpoint).Methods("POST")
+	router.HandleFunc("/signup", CORSHandler).Methods("OPTIONS")
 	log.Fatal(http.ListenAndServe(":3344", router))
 
 }
