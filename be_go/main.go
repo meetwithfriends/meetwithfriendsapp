@@ -20,7 +20,7 @@ type DBase struct {
 
 //Token used for tokens array.
 type Token struct {
-	Name  string `json:"name"`
+	Name  string `json:"email"`
 	Token string `json:"token"`
 }
 
@@ -30,9 +30,9 @@ type Err struct {
 	Text string `json:"text"`
 }
 
-//UserAuth - name/pass - used for login/signup
+//UserAuth -/pass - used for login/signup
 type UserAuth struct {
-	Name string `json:"name"`
+	Name string `json:"email"`
 	Pass string `json:"pass"`
 }
 
