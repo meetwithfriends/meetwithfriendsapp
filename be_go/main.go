@@ -9,6 +9,7 @@ import (
 
 	bolt "github.com/boltdb/bolt"
 	"github.com/gomarkdown/markdown"
+	"github.com/gorilla/mux"
 )
 
 //DBase type used for storing BoltDB instance
@@ -83,9 +84,10 @@ func serveHelp(w http.ResponseWriter, r *http.Request) {
 func main() {
 	tokens = make(map[string]string)
 	auth = initAuthBase()
-	http.HandleFunc("/", serveHelp)
-	http.HandleFunc("/signin", signIn)
-	http.HandleFunc("/signup", signUp)
-	log.Fatal(http.ListenAndServe(":3344", nil))
+	router := mux.NewRouter()
+	router.HandleFunc("/", serveHelp).Methods("GET")
+	router.HandleFunc("/signin", signInEndpoint).Methods("POST")
+	router.HandleFunc("/signin", CORSHandler).Methods("OPTIONS")
+	log.Fatal(http.ListenAndServe(":3344", router))
 
 }
