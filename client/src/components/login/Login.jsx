@@ -1,7 +1,10 @@
 import React from "react";
-import { AuthContext } from "../../App";
+import { AuthContext } from "../../context/Context";
+import { Link } from 'react-router-dom';
 
 import "./Login.css";
+
+import { URL, PORT } from '../../Constants'
 
 export const Login = () => {
   const { dispatch } = React.useContext(AuthContext);
@@ -27,8 +30,8 @@ const handleFormSubmit = event => {
       isSubmitting: true,
       errorMessage: null
     });
-    fetch("http://diachenko.me:5000/signin", {
-      method: "post",
+    fetch(`${URL}:${PORT}/signin`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
@@ -38,12 +41,14 @@ const handleFormSubmit = event => {
       })
     })
       .then(res => {
+        console.log(res)
         if (res.ok) {
           return res.json();
         }
         throw res;
       })
       .then(resJson => {
+        console.log(resJson)
         dispatch({
             type: "LOGIN",
             payload: resJson
@@ -83,18 +88,20 @@ return (
                 placeholder="Password"
                 required
               />
-
+      
 			{data.errorMessage && (
               <span className="form-error">{data.errorMessage}</span>
             )}
-
-           <button className='btn-login' disabled={data.isSubmitting}>
+            <Link to='/restore' className='recovery-link'>Forgot your password?</Link>
+           <button className='btn btn-login' disabled={data.isSubmitting}>
               {data.isSubmitting ? (
                 "Loading..."
               ) : (
                 "Login"
               )}
             </button>
+            <p className="btn-title">Don't have an account?</p>
+            <Link to='/signup' className='btn btn-signup'>SIGN UP</Link>
           </form>
         </div>
     </div>
